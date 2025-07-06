@@ -1,4 +1,4 @@
-using EstudoIA.Components;
+using EstudoIA.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,6 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(EstudoIA.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(EstudoIA.Web.Client._Imports).Assembly);
 
 app.Run();

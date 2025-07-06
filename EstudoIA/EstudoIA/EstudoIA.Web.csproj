@@ -7,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EstudoIA.Application\EstudoIA.Application.csproj" />
     <ProjectReference Include="..\EstudoIA.Client\EstudoIA.Client.csproj" />
-    <ProjectReference Include="..\EstudoIA.Domain\EstudoIA.Domain.csproj" />
-    <ProjectReference Include="..\EstudoIA.Infrastructure\EstudoIA.Infrastructure.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.6" />
-    <PackageReference Include="Radzen.Blazor" Version="7.1.3" />
   </ItemGroup>
 
 </Project>
