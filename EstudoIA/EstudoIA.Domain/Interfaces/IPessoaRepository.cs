@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using EstudoIA.Domain.Entities; // Ajustado para o novo namespace da entidade
 
-namespace PessoaApp.Domain
+namespace EstudoIA.Domain.Interfaces
 {
     public interface IPessoaRepository
     {

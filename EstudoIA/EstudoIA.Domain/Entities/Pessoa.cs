@@ -1,4 +1,4 @@
-namespace PessoaApp.Domain
+namespace EstudoIA.Domain.Entities
 {
     public class Pessoa
     {

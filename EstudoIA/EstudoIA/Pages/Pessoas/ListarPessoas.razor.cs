@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using PessoaApp.Application;
-using PessoaApp.Domain;
+using EstudoIA.Application.Services; // Ajustado
+using EstudoIA.Domain.Entities;      // Ajustado
 using Radzen;
 using Radzen.Blazor;
 
-namespace PessoaApp.Presentation.Pages
+// O namespace aqui deve corresponder ao local do arquivo dentro do projeto Blazor principal.
+// Se o projeto raiz EstudoIA tem o namespace EstudoIA, e as páginas estão em Pages/Pessoas,
+// então EstudoIA.Pages.Pessoas é uma convenção comum.
+namespace EstudoIA.Pages.Pessoas
 {
     public partial class ListarPessoasBase : ComponentBase
     {
@@ -41,9 +44,9 @@ namespace PessoaApp.Presentation.Pages
             catch (Exception ex)
             {
                 NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Erro ao carregar pessoas", Detail = ex.Message, Duration = 4000 });
-                pessoas = new List<Pessoa>(); // Inicializa com lista vazia em caso de erro
+                pessoas = new List<Pessoa>();
             }
-            await InvokeAsync(StateHasChanged); // Garante que a UI seja atualizada
+            await InvokeAsync(StateHasChanged);
         }
 
         protected void NavigateToCadastrarPessoa()
@@ -65,10 +68,10 @@ namespace PessoaApp.Presentation.Pages
                 {
                     PessoaService.DeletePessoa(pessoaId);
                     NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Sucesso", Detail = $"{nomePessoa} excluído(a) com sucesso.", Duration = 4000 });
-                    await LoadPessoas(); // Recarrega a lista
+                    await LoadPessoas();
                     if (grid != null)
                     {
-                        await grid.Reload(); // Força o refresh do grid
+                        await grid.Reload();
                     }
                 }
                 catch (Exception ex)
