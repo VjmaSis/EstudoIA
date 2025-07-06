@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using PessoaApp.Domain;
+using EstudoIA.Domain.Entities; // Ajustado
+using EstudoIA.Domain.Interfaces; // Ajustado
 
-namespace PessoaApp.Application
+namespace EstudoIA.Application.Services
 {
     public class PessoaService
     {
@@ -15,12 +16,6 @@ namespace PessoaApp.Application
 
         public Pessoa CreatePessoa(string nome, DateTime dataNascimento, string email, string cpf)
         {
-            // Validações adicionais de negócio podem ser inseridas aqui antes de criar a entidade
-            // Por exemplo, verificar se o CPF é válido (formato e dígito verificador)
-            // ou se o e-mail tem um formato válido.
-            // Por enquanto, essas validações estão na entidade Pessoa, mas algumas
-            // poderiam ser movidas ou duplicadas aqui se fizerem sentido como regras de aplicação.
-
             var pessoa = new Pessoa(nome, dataNascimento, email, cpf);
             _pessoaRepository.Add(pessoa);
             return pessoa;
@@ -43,11 +38,8 @@ namespace PessoaApp.Application
             {
                 throw new KeyNotFoundException($"Pessoa com ID {id} não encontrada para atualização.");
             }
-
-            // Novamente, validações de negócio podem ocorrer aqui.
-            // A entidade Pessoa já tem suas próprias validações ao chamar o método Update.
-            pessoa.Update(nome, dataNascimento, email, cpf); // A entidade valida os campos
-            _pessoaRepository.Update(pessoa); // O repositório pode ter lógicas de persistência/duplicidade
+            pessoa.Update(nome, dataNascimento, email, cpf);
+            _pessoaRepository.Update(pessoa);
         }
 
         public void DeletePessoa(Guid id)

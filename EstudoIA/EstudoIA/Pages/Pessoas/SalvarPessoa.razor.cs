@@ -2,11 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using PessoaApp.Application;
-using PessoaApp.Domain;
+using EstudoIA.Application.Services; // Ajustado
+using EstudoIA.Domain.Entities;      // Ajustado
 using Radzen;
 
-namespace PessoaApp.Presentation.Pages
+// O namespace aqui deve corresponder ao local do arquivo dentro do projeto Blazor principal.
+namespace EstudoIA.Pages.Pessoas
 {
     // Modelo auxiliar para o formulário, incluindo DataAnnotations para validação do Radzen
     public class PessoaModel
@@ -18,27 +19,25 @@ namespace PessoaApp.Presentation.Pages
 
         [Required(ErrorMessage = "Data de Nascimento é obrigatória")]
         [Range(typeof(DateTime), "1/1/1900", "1/1/2100", ErrorMessage = "Data de Nascimento inválida")]
-        public DateTime? DataNascimento { get; set; } // Nullable para validação de Required
+        public DateTime? DataNascimento { get; set; }
 
         [Required(ErrorMessage = "E-mail é obrigatório")]
         [EmailAddress(ErrorMessage = "Formato de e-mail inválido")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "CPF é obrigatório")]
-        // TODO: Adicionar uma validação customizada para CPF (formato e lógica)
-        // [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$", ErrorMessage = "Formato de CPF inválido (###.###.###-##)")]
         public string Cpf { get; set; }
 
         public PessoaModel()
         {
-            DataNascimento = null; // Inicializa como null para o validador Required funcionar corretamente
+            DataNascimento = null;
         }
     }
 
     public partial class SalvarPessoaBase : ComponentBase
     {
         [Parameter]
-        public Guid? PessoaId { get; set; } // Nullable para diferenciar modo de cadastro e edição
+        public Guid? PessoaId { get; set; }
 
         [Inject]
         protected PessoaService PessoaService { get; set; }
@@ -85,8 +84,9 @@ namespace PessoaApp.Presentation.Pages
             }
             else
             {
-                pessoaModel = new PessoaModel(); // Garante que está limpo para cadastro
+                pessoaModel = new PessoaModel();
             }
+            await base.OnParametersSetAsync(); // Adicionado para garantir ciclo de vida
         }
 
         protected async Task OnSubmit()
@@ -96,7 +96,6 @@ namespace PessoaApp.Presentation.Pages
             {
                 if (!pessoaModel.DataNascimento.HasValue)
                 {
-                     // Validação extra, pois o RadzenRequiredValidator pode não pegar se o campo for DateTime e não DateTime?
                     NotificationService.Notify(NotificationSeverity.Error, "Erro de Validação", "Data de Nascimento é obrigatória.", 5000);
                     return;
                 }
@@ -113,12 +112,12 @@ namespace PessoaApp.Presentation.Pages
                 }
                 NavigateToListarPessoas();
             }
-            catch (InvalidOperationException ex) // Captura CPF duplicado do repositório
+            catch (InvalidOperationException ex)
             {
                 ErrorMessage = ex.Message;
                 NotificationService.Notify(NotificationSeverity.Error, "Erro de Negócio", ex.Message, 5000);
             }
-            catch (ArgumentException ex) // Captura validações da entidade Pessoa
+            catch (ArgumentException ex)
             {
                  ErrorMessage = ex.Message;
                  NotificationService.Notify(NotificationSeverity.Error, "Erro de Validação", ex.Message, 5000);

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PessoaApp.Domain;
+using EstudoIA.Domain.Entities; // Ajustado
+using EstudoIA.Domain.Interfaces; // Ajustado
 
-namespace PessoaApp.Infrastructure
+namespace EstudoIA.Infrastructure.Repositories
 {
     public class PessoaRepository : IPessoaRepository
     {
@@ -33,7 +34,6 @@ namespace PessoaApp.Infrastructure
             var existingPessoa = GetById(pessoa.Id);
             if (existingPessoa != null)
             {
-                // Verifica se o CPF está sendo alterado para um já existente em outro cadastro
                 if (_pessoas.Any(p => p.Cpf == pessoa.Cpf && p.Id != pessoa.Id))
                 {
                     throw new InvalidOperationException("Já existe outra pessoa cadastrada com este CPF.");
