@@ -3,31 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Web", "EstudoIA.Web\EstudoIA.Web\EstudoIA.Web.csproj", "{4766D479-F19D-4D37-B8C8-1F7F341DF1F0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Web.Client", "EstudoIA.Web\EstudoIA.Web.Client\EstudoIA.Web.Client.csproj", "{9A4F4C18-C509-4E53-A14F-5EF961653FD2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Api", "EstudoIA.Api\EstudoIA.Api.csproj", "{CBBF0CF0-A967-4CC3-B795-05809F6E7D02}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4766D479-F19D-4D37-B8C8-1F7F341DF1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4766D479-F19D-4D37-B8C8-1F7F341DF1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4766D479-F19D-4D37-B8C8-1F7F341DF1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4766D479-F19D-4D37-B8C8-1F7F341DF1F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A4F4C18-C509-4E53-A14F-5EF961653FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A4F4C18-C509-4E53-A14F-5EF961653FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A4F4C18-C509-4E53-A14F-5EF961653FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A4F4C18-C509-4E53-A14F-5EF961653FD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBBF0CF0-A967-4CC3-B795-05809F6E7D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBBF0CF0-A967-4CC3-B795-05809F6E7D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBBF0CF0-A967-4CC3-B795-05809F6E7D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBBF0CF0-A967-4CC3-B795-05809F6E7D02}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
