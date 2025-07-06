@@ -3,43 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA", "EstudoIA\EstudoIA\EstudoIA.csproj", "{7AE3092C-DB8A-4856-B470-3968D601FC28}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Client", "EstudoIA\EstudoIA.Client\EstudoIA.Client.csproj", "{35E68B61-9845-406A-AC6A-88FB10301EDB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Application", "EstudoIA\EstudoIA.Application\EstudoIA.Application.csproj", "{D66A1FC5-E72A-2679-B71C-DEF832A604A9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Domain", "EstudoIA\EstudoIA.Domain\EstudoIA.Domain.csproj", "{39AA5EB5-1355-C6EE-87DF-EC411E581BB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudoIA.Infrastructure", "EstudoIA\EstudoIA.Infrastructure\EstudoIA.Infrastructure.csproj", "{8D3DAF14-34C6-3212-8055-C05CDC4F3A77}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7AE3092C-DB8A-4856-B470-3968D601FC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7AE3092C-DB8A-4856-B470-3968D601FC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AE3092C-DB8A-4856-B470-3968D601FC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7AE3092C-DB8A-4856-B470-3968D601FC28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35E68B61-9845-406A-AC6A-88FB10301EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35E68B61-9845-406A-AC6A-88FB10301EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35E68B61-9845-406A-AC6A-88FB10301EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35E68B61-9845-406A-AC6A-88FB10301EDB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D66A1FC5-E72A-2679-B71C-DEF832A604A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D66A1FC5-E72A-2679-B71C-DEF832A604A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D66A1FC5-E72A-2679-B71C-DEF832A604A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D66A1FC5-E72A-2679-B71C-DEF832A604A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39AA5EB5-1355-C6EE-87DF-EC411E581BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39AA5EB5-1355-C6EE-87DF-EC411E581BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39AA5EB5-1355-C6EE-87DF-EC411E581BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39AA5EB5-1355-C6EE-87DF-EC411E581BB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D3DAF14-34C6-3212-8055-C05CDC4F3A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D3DAF14-34C6-3212-8055-C05CDC4F3A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D3DAF14-34C6-3212-8055-C05CDC4F3A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D3DAF14-34C6-3212-8055-C05CDC4F3A77}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
