@@ -1,0 +1,32 @@
+@page "/listar-pessoas"
+@using PessoaApp.Domain
+@using Radzen
+@using Radzen.Blazor
+
+@inherits ListarPessoasBase
+
+<PageTitle>Pessoas Cadastradas</PageTitle>
+
+<RadzenText Text="Pessoas Cadastradas" TextStyle="TextStyle.H3" TagName="TagName.H1" Class="mt-4" />
+
+<RadzenButton Text="Adicionar Nova Pessoa" Click="@NavigateToCadastrarPessoa" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="mt-3 mb-4" />
+
+<RadzenDataGrid @ref="grid" AllowFiltering="true" AllowPaging="true" PageSize="10" AllowSorting="true"
+                Data="@pessoas" TItem="Pessoa" ColumnWidth="200px" EmptyText="Nenhuma pessoa cadastrada.">
+    <Columns>
+        <RadzenDataGridColumn TItem="Pessoa" Property="Nome" Title="Nome" />
+        <RadzenDataGridColumn TItem="Pessoa" Property="DataNascimento" Title="Data de Nascimento">
+            <Template Context="pessoa">
+                @($"{pessoa.DataNascimento:dd/MM/yyyy}")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Pessoa" Property="Email" Title="E-mail" />
+        <RadzenDataGridColumn TItem="Pessoa" Property="Cpf" Title="CPF" />
+        <RadzenDataGridColumn TItem="Pessoa" Title="Ações" Width="160px" Sortable="false" Filterable="false" TextAlign="TextAlign.Center">
+            <Template Context="pessoa">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => NavigateToEditarPessoa(pessoa.Id))" @onclick:stopPropagation />
+                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => ConfirmDeletePessoa(pessoa.Id, pessoa.Nome))" @onclick:stopPropagation />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
