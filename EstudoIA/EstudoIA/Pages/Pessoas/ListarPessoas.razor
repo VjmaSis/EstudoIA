@@ -1,33 +1,63 @@
 @page "/listar-pessoas"
-@using EstudoIA.Domain.Entities // Ajustado
-@using Radzen
-@using Radzen.Blazor
-@using EstudoIA.Pages.Pessoas // Namespace para o code-behind
+@using EstudoIA.Domain.Entities
+@using EstudoIA.Pages.Pessoas
 
 @inherits ListarPessoasBase
 
 <PageTitle>Pessoas Cadastradas</PageTitle>
 
-<RadzenText Text="Pessoas Cadastradas" TextStyle="TextStyle.H3" TagName="TagName.H1" Class="mt-4" />
+<h3>Pessoas Cadastradas</h3>
 
-<RadzenButton Text="Adicionar Nova Pessoa" Click="@NavigateToCadastrarPessoa" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="mt-3 mb-4" />
+<button class="btn btn-primary my-3" @onclick="NavigateToCadastrarPessoa">Adicionar Nova Pessoa</button>
 
-<RadzenDataGrid @ref="grid" AllowFiltering="true" AllowPaging="true" PageSize="10" AllowSorting="true"
-                Data="@pessoas" TItem="Pessoa" ColumnWidth="200px" EmptyText="Nenhuma pessoa cadastrada.">
-    <Columns>
-        <RadzenDataGridColumn TItem="Pessoa" Property="Nome" Title="Nome" />
-        <RadzenDataGridColumn TItem="Pessoa" Property="DataNascimento" Title="Data de Nascimento">
-            <Template Context="pessoa">
-                @($"{pessoa.DataNascimento:dd/MM/yyyy}")
-            </Template>
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="Pessoa" Property="Email" Title="E-mail" />
-        <RadzenDataGridColumn TItem="Pessoa" Property="Cpf" Title="CPF" />
-        <RadzenDataGridColumn TItem="Pessoa" Title="Ações" Width="160px" Sortable="false" Filterable="false" TextAlign="TextAlign.Center">
-            <Template Context="pessoa">
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => NavigateToEditarPessoa(pessoa.Id))" @onclick:stopPropagation />
-                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => ConfirmDeletePessoa(pessoa.Id, pessoa.Nome))" @onclick:stopPropagation />
-            </Template>
-        </RadzenDataGridColumn>
-    </Columns>
-</RadzenDataGrid>
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
+@if (pessoas == null)
+{
+    <p><em>Carregando...</em></p>
+}
+else if (!pessoas.Any())
+{
+    <p>Nenhuma pessoa cadastrada.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data de Nascimento</th>
+                <th>E-mail</th>
+                <th>CPF</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pessoa in pessoas)
+            {
+                <tr>
+                    <td>@pessoa.Nome</td>
+                    <td>@pessoa.DataNascimento.ToString("dd/MM/yyyy")</td>
+                    <td>@pessoa.Email</td>
+                    <td>@pessoa.Cpf</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" @onclick="() => NavigateToEditarPessoa(pessoa.Id)">Editar</button>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => ConfirmDeletePessoa(pessoa.Id, pessoa.Nome)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

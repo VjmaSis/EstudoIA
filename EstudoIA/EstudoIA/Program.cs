@@ -3,7 +3,7 @@ using EstudoIA.Application.Services; // Novo: Para PessoaService
 using EstudoIA.Domain.Interfaces;    // Novo: Para IPessoaRepository
 using EstudoIA.Infrastructure.Repositories; // Novo: Para PessoaRepository (concreto)
 using EstudoIA.Infrastructure.Adapters;   // Novo: Para PessoaRepositoryAdapter
-using Radzen; // Novo: Para serviços Radzen como DialogService, NotificationService
+// Radzen using removido
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +12,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-// Adicionar serviços Radzen (se ainda não estiverem presentes)
-builder.Services.AddScoped<DialogService>();
-builder.Services.AddScoped<NotificationService>();
-builder.Services.AddScoped<TooltipService>(); // Exemplo de outros serviços Radzen
-builder.Services.AddScoped<ContextMenuService>(); // Exemplo de outros serviços Radzen
+// Registros de serviços Radzen removidos
 
 
 // Nossos serviços da aplicação de Pessoa

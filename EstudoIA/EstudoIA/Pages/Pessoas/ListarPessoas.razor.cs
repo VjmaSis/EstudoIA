@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using EstudoIA.Application.Services; // Ajustado
-using EstudoIA.Domain.Entities;      // Ajustado
-using Radzen;
-using Radzen.Blazor;
+using Microsoft.JSInterop; // Necessário para o confirm de exclusão
+using EstudoIA.Application.Services;
+using EstudoIA.Domain.Entities;
 
-// O namespace aqui deve corresponder ao local do arquivo dentro do projeto Blazor principal.
-// Se o projeto raiz EstudoIA tem o namespace EstudoIA, e as páginas estão em Pages/Pessoas,
-// então EstudoIA.Pages.Pessoas é uma convenção comum.
 namespace EstudoIA.Pages.Pessoas
 {
     public partial class ListarPessoasBase : ComponentBase
@@ -22,13 +18,11 @@ namespace EstudoIA.Pages.Pessoas
         protected NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        protected DialogService DialogService { get; set; }
-
-        [Inject]
-        protected NotificationService NotificationService { get; set; }
+        protected IJSRuntime JSRuntime { get; set; } // Injetar IJSRuntime
 
         protected IEnumerable<Pessoa> pessoas;
-        protected RadzenDataGrid<Pessoa> grid;
+        protected string errorMessage;
+        protected string successMessage;
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,16 +31,18 @@ namespace EstudoIA.Pages.Pessoas
 
         protected async Task LoadPessoas()
         {
+            errorMessage = null;
+            // successMessage = null; // Limpar mensagem de sucesso ao recarregar pode ser opcional
             try
             {
                 pessoas = PessoaService.GetAllPessoas().ToList();
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Erro ao carregar pessoas", Detail = ex.Message, Duration = 4000 });
+                errorMessage = $"Erro ao carregar pessoas: {ex.Message}";
                 pessoas = new List<Pessoa>();
             }
-            await InvokeAsync(StateHasChanged);
+            // StateHasChanged(); // Não é necessário chamar StateHasChanged aqui explicitamente se OnInitializedAsync é o chamador
         }
 
         protected void NavigateToCadastrarPessoa()
@@ -61,24 +57,25 @@ namespace EstudoIA.Pages.Pessoas
 
         protected async Task ConfirmDeletePessoa(Guid pessoaId, string nomePessoa)
         {
-            var result = await DialogService.Confirm($"Tem certeza que deseja excluir {nomePessoa}?", "Confirmar Exclusão", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
-            if (result == true)
+            successMessage = null;
+            errorMessage = null;
+
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Tem certeza que deseja excluir {nomePessoa}?");
+
+            if (confirmed)
             {
                 try
                 {
                     PessoaService.DeletePessoa(pessoaId);
-                    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Sucesso", Detail = $"{nomePessoa} excluído(a) com sucesso.", Duration = 4000 });
+                    successMessage = $"{nomePessoa} excluído(a) com sucesso.";
                     await LoadPessoas();
-                    if (grid != null)
-                    {
-                        await grid.Reload();
-                    }
                 }
                 catch (Exception ex)
                 {
-                    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Erro ao excluir", Detail = ex.Message, Duration = 4000 });
+                    errorMessage = $"Erro ao excluir {nomePessoa}: {ex.Message}";
                 }
             }
+            StateHasChanged(); // Chamar StateHasChanged após operações assíncronas que alteram o estado e não são eventos de UI diretos
         }
     }
 }
