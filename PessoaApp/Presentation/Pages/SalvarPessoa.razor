@@ -1,0 +1,64 @@
+@page "/cadastrar-pessoa"
+@page "/editar-pessoa/{PessoaId:guid}"
+
+@using PessoaApp.Domain
+@using Radzen
+@using Radzen.Blazor
+@using System.ComponentModel.DataAnnotations
+
+@inherits SalvarPessoaBase
+
+<PageTitle>@(IsEditMode ? "Editar Pessoa" : "Cadastrar Nova Pessoa")</PageTitle>
+
+<RadzenText Text="@(IsEditMode ? "Editar Pessoa" : "Cadastrar Nova Pessoa")" TextStyle="TextStyle.H3" TagName="TagName.H1" Class="mt-4 mb-4" />
+
+<RadzenTemplateForm TItem="PessoaModel" Data="@pessoaModel" Submit="@OnSubmit" InvalidSubmit="@OnInvalidSubmit">
+    <RadzenFieldset Text="Dados Pessoais">
+        <div class="row mb-3">
+            <div class="col-md-3 align-items-center d-flex">
+                <RadzenLabel Text="Nome" Component="Nome" />
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox @bind-Value="pessoaModel.Nome" Name="Nome" Class="w-100" />
+                <RadzenRequiredValidator Component="Nome" Text="Nome é obrigatório" Popup="true" Style="position: absolute" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 align-items-center d-flex">
+                <RadzenLabel Text="Data de Nascimento" Component="DataNascimento" />
+            </div>
+            <div class="col-md-9">
+                <RadzenDatePicker @bind-Value="pessoaModel.DataNascimento" Name="DataNascimento" DateFormat="dd/MM/yyyy" Class="w-100" />
+                <RadzenRequiredValidator Component="DataNascimento" Text="Data de Nascimento é obrigatória" Popup="true" Style="position: absolute" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 align-items-center d-flex">
+                <RadzenLabel Text="E-mail" Component="Email" />
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox @bind-Value="pessoaModel.Email" Name="Email" Class="w-100" />
+                <RadzenRequiredValidator Component="Email" Text="E-mail é obrigatório" Popup="true" Style="position: absolute" />
+                <RadzenEmailValidator Component="Email" Text="Formato de e-mail inválido" Popup="true" Style="position: absolute" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 align-items-center d-flex">
+                <RadzenLabel Text="CPF" Component="Cpf" />
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox @bind-Value="pessoaModel.Cpf" Name="Cpf" Class="w-100" />
+                <RadzenRequiredValidator Component="Cpf" Text="CPF é obrigatório" Popup="true" Style="position: absolute" />
+                @* Adicionar validador de CPF customizado se necessário *@
+            </div>
+        </div>
+    </RadzenFieldset>
+
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="1rem" Class="mt-4">
+        <RadzenButton ButtonType="ButtonType.Submit" Text="Salvar" Icon="save" ButtonStyle="ButtonStyle.Primary" />
+        <RadzenButton Text="Cancelar" Icon="cancel" ButtonStyle="ButtonStyle.Light" Click="@NavigateToListarPessoas" />
+    </RadzenStack>
+</RadzenTemplateForm>

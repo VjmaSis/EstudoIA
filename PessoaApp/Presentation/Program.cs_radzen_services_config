@@ -1,0 +1,70 @@
+// Conteúdo para adicionar ao seu Program.cs (ou Startup.ConfigureServices)
+
+using PessoaApp.Application;
+using PessoaApp.Domain;
+using PessoaApp.Infrastructure;
+using PessoaApp.Infrastructure.Adapters;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Adicionar serviços Radzen (geralmente já presentes em um projeto Radzen)
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+// Adicionar outros serviços Radzen como DialogService, NotificationService, etc.
+// builder.Services.AddScoped<DialogService>();
+// builder.Services.AddScoped<NotificationService>();
+// builder.Services.AddScoped<TooltipService>();
+// builder.Services.AddScoped<ContextMenuService>();
+
+// Nossos serviços da aplicação
+// 1. Repositório em memória (Singleton pois não tem estado que dependa do escopo da requisição e queremos os mesmos dados para todos)
+builder.Services.AddSingleton<PessoaRepository>(); // A implementação concreta
+
+// 2. O Adapter que usa o PessoaRepository.
+//    Ele é Scoped porque pode, no futuro, adaptar um repositório com escopo (ex: DbContext do EF Core).
+//    Ele recebe a implementação concreta do PessoaRepository.
+builder.Services.AddScoped<IPessoaRepository>(sp =>
+    new PessoaRepositoryAdapter(sp.GetRequiredService<PessoaRepository>()));
+
+// 3. O serviço da aplicação que depende de IPessoaRepository (que será o adapter).
+//    Scoped porque pode realizar operações que são relevantes para uma sessão de usuário ou requisição.
+builder.Services.AddScoped<PessoaService>();
+
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+
+app.Run();
+
+// NOTA: Se o seu projeto Radzen for mais antigo e usar Startup.cs:
+// No método ConfigureServices(IServiceCollection services) de Startup.cs:
+/*
+public void ConfigureServices(IServiceCollection services)
+{
+    // ... outros serviços Radzen
+    services.AddRazorPages();
+    services.AddServerSideBlazor();
+    // services.AddScoped<DialogService>();
+    // services.AddScoped<NotificationService>();
+    // ...
+
+    // Nossos serviços
+    services.AddSingleton<PessoaRepository>();
+    services.AddScoped<IPessoaRepository>(sp =>
+        new PessoaRepositoryAdapter(sp.GetRequiredService<PessoaRepository>()));
+    services.AddScoped<PessoaService>();
+}
+*/
